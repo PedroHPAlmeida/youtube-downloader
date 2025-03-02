@@ -2,6 +2,7 @@ FROM python:3.10-slim
 
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
+ENV PORT=5000
 
 WORKDIR /app
 
@@ -19,6 +20,6 @@ RUN adduser --disabled-password --gecos '' appuser && \
 
 USER appuser
 
-EXPOSE 5000
+EXPOSE $PORT
 
-CMD ["gunicorn", "--bind", "0.0.0.0:5000", "--workers", "4", "--threads", "4", "app:app"]
+CMD ["gunicorn", "--bind", "0.0.0.0:$PORT", "--workers", "4", "--threads", "4", "app:app"]
