@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Download de Áudio do YouTube</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 400px;
+            margin: 100px auto;
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 12px 20px;
+            margin: 8px 0;
+            box-sizing: border-box;
+            border: 2px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            width: 100%;
+            background-color: #4CAF50;
+            color: white;
+            padding: 12px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        button:disabled {
+            background-color: #999;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Download de Áudio do YouTube</h1>
+        <form method="POST" action="/" target="download_frame" id="download_form">
+            <input type="text" name="url" placeholder="Digite a URL do vídeo" required>
+            <button type="submit" id="download_button">Baixar MP3</button>
+        </form>
+        <iframe id="download_frame" name="download_frame" style="display:none;"></iframe>
+    </div>
+    <script>
+        document.getElementById("download_form").addEventListener("submit", function () {
+            var downloadButton = document.getElementById("download_button");
+            downloadButton.disabled = true;
+            downloadButton.textContent = "Carregando...";
+
+            var interval = setInterval(function () {
+                if (document.cookie.indexOf("downloadToken=true") !== -1) {
+                    downloadButton.disabled = false;
+                    downloadButton.textContent = "Baixar MP3";
+                    clearInterval(interval);
+                    document.cookie = "downloadToken=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/";
+                }
+            }, 1000);
+        });
+    </script>
+</body>
+
+</html>
